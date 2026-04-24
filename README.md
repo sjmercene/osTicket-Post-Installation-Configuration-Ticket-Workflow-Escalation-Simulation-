@@ -1,28 +1,42 @@
-##  Post-Installation Configuration & Help Desk Simulation
+#  Post-Installation Configuration & Help Desk Simulation
 
-After successfully installing osTicket, I went on to configure the system to simulate a small real-world IT help desk environment. The purpose of this was to gain hands-on experience in how ticketing systems operate within a small organisation scenario.
+After successfully installing osTicket, i went on to configure the system to simulate a small real-world IT help desk environment. The purpose of this was to gain hands-on experience in how ticketing systems operate within a small organisation scenario.
 
-I set up key components including roles, departments, and teams, and created agents and users to mirror a real support structure. I then tested the system by creating and managing tickets to understand how issues are logged, assigned, escalated, and resolved.
+I set up key components such as roles, departments, and teams, and created agents and users to simulate a real help desk environment. I then tested the system by creating and managing tickets to see how issues are logged, assigned, escalated, and resolved in practice.
 
 ---
 
 ### Roles (Access Control)
 
-I created a role called **Supreme Admin** to control agent permissions within the system.
+I first created a role called **Supreme Admin** to manage agent permissions within the system.
 
-Roles define what actions agents are allowed to perform. For this lab, I enabled full permissions to allow complete system access during testing.
+<img src="https://github.com/sjmercene/osTicket-Post-Installation-Configuration-Ticket-Workflow-Escalation-Simulation-/blob/sjmercene-osTicket-Post-configuration-Images/Role%20Name.JPG" width="700">
 
-This helped me understand how access control works in a help desk environment. In real-world scenarios, organisations follow the principle of least privilege, where users are only given the permissions necessary for their role.
+**Screenshot:** `Supreme Admin role configured with full permissions`
+
+<br>
+
+While configuring this, i was able to see how roles directly control what actions an agent can perform within the system, such as managing tickets and accessing different settings.
+
+In a real-world environment, this would not be configured with full access. Organisations typically follow the principle of least privilege, where permissions are restricted based on the user’s role to reduce security risks.
 
 ---
 
-### 🏢 Departments (Ticket Routing)
+### Departments (Ticket Routing)
 
 To simulate a real business environment, I created a department called **IT Support**.
 
-Departments are used to route tickets to the appropriate team. In this case, all technical issues submitted by users are directed to IT Support.
+<img src="https://github.com/sjmercene/osTicket-Post-Installation-Configuration-Ticket-Workflow-Escalation-Simulation-/blob/sjmercene-osTicket-Post-configuration-Images/Creating%20Department%20IT%20Support.JPG" width="700">
 
-I also observed default departments such as **Support (Default)** and chose not to remove them. These can act as fallback routing options if configuration is incomplete, which reflects how real systems maintain redundancy.
+**Screenshot:** `IT Support department configuration`
+
+<br>
+
+I created a department called **IT Support** to handle user-submitted technical issues within the system (roleplay).
+
+While configuring this, i learned how departments are used to route tickets to the appropriate team based, depending on the type of request.
+
+Note i kept the default department **Support (Default)** as a fallback option. This ensures a safety net incase i misconfigure the evvironment im playing around with.
 
 ---
 
@@ -30,30 +44,30 @@ I also observed default departments such as **Support (Default)** and chose not 
 
 I created a team called **Level II Support** to simulate an escalation structure within the help desk.
 
-Teams allow agents to collaborate and handle more complex issues. This setup represents how higher-level support staff handle advanced technical problems after escalation.
+while setting this up, i learned that teams is used to allow agents from different departments to collaborate and handle more complex issues.
 
-This helped me understand how help desk systems organise support tiers.
+this reflects how higher-level support tiers take over tickets that require more advanced troubleshooting tasks after escalation.
 
 ---
 
-### 👨‍💻 Agents (Help Desk Staff)
+### Agents (Help Desk Staff)
 
-I created agent accounts to simulate IT support staff.
+I now created agent accounts to simulate a roleplay of IT support staff within the system.
 
-Example configuration:
+**My configuration i used:**
 
 - **John Smith**
 - **Jane Doe (Level II Support)**
 
-Each agent was assigned:
+each agent was assigned:
 
-- Role → Supreme Admin  
-- Department → IT Support  
-- Team → Level II Support  
+- role → Supreme Admin  
+- department → IT Support  
+- team → Level II Support  
 
-Agents are responsible for managing and resolving tickets. This step demonstrated how roles, departments, and teams work together to control access and responsibilities.
+while setting this up, i saw how roles, departments, and teams work together to control what each agent can access and which tickets they are responsible for.
 
-I also performed an agent password reset, which reflects a common help desk task related to account management.
+I also had to perform an agent password reset after forgetting Jane Doe’s login details. this reflects a common help desk task related to account and access management.
 
 ---
 
@@ -64,41 +78,46 @@ I created user accounts to simulate employees submitting support requests:
 - Mike Johnson → `mike@company.com`  
 - Sarah Lee → `sarah@company.com`  
 
-Users represent individuals who generate tickets when issues occur. Unlike agents, users do not have permissions or system access — they only interact with the system by submitting requests.
+while setting this up, i saw how users interact with the system differently from agents, as they can only submit and track tickets rather than access or manage the system.
 
-This helped reinforce the difference between customers and help desk staff.
+this highlights the separation privilege between customers and help desk staff within a ticketing environment.
 
 ---
 
 ### ⏱️ SLA Plans (Ticket Prioritisation)
 
-I configured SLA (Service Level Agreement) plans to define ticket urgency and response times:
+i configured SLA (Service Level Agreement) plans to define ticket urgency and response times to further simulate the environment:
 
 - SEV-A (Critical) → 1 hour  
 - SEV-B (Medium) → 4 hours  
 - SEV-C (Low) → 8 hours  
 
-SLA plans are used to prioritise tickets based on business impact. This reflects real-world environments where critical issues must be resolved faster than less urgent ones.
+while setting this up, i saw how SLA plans control how quickly tickets need to be responded to and resolved based on their priority.
+
+this shows how higher-impact issues are handled more urgently, while lower-priority requests are given longer response times.
 
 ---
 
-## 🎫 Ticket Workflow Testing
+##  Ticket Workflow Testing
 
 ### ✅ Ticket Verification
 
-I created a test ticket as a user and verified that it appeared in the Agent Panel.
+I now created a test ticket role playing as the user `Mike Johnson` and verified that it appeared in the Agent Panel.
 
-This confirmed that the system was correctly receiving and routing tickets from users to help desk staff, validating end-to-end functionality.
+<img src="https://github.com/sjmercene/osTicket-Post-Installation-Configuration-Ticket-Workflow-Escalation-Simulation-/blob/sjmercene-osTicket-Post-configuration-Images/Ticket%20Working.JPG" width="650">
+
+**Screenshot:** `Ticket successfully created and visible in Agent Panel.`
+
+This confirmed that the system was working correctly, receiving and routing tickets from users to help desk staff, validating full functionality.
 
 ---
 
-### 🔄 Basic Ticket Lifecycle (Mike Johnson)
+### 🔄 Basic Ticket Lifecycle Testing (Mike Johnson)
 
-I simulated a complete help desk workflow:
+In this simulated test i completed a help desk workflow containing:
 
 - User submitted a ticket  
 - Ticket was assigned to an agent  
-- SLA (SEV-B) was applied  
 - Agent responded professionally  
 - Issue was resolved  
 - Ticket was closed  
@@ -107,21 +126,29 @@ This demonstrated the full lifecycle of a ticket from creation to resolution.
 
 ---
 
-### 🚀 Escalation Scenario (Sarah Lee)
+### Escalation Scenario (Sarah Lee)
 
 To simulate a more realistic scenario, I created a ticket where a user could not log into their workstation.
 
 The workflow included:
 
-- Assigning a high-priority SLA (SEV-A)  
-- Adding internal notes for investigation  
-- Escalating the ticket to a Level II agent  
-- Responding to the user with updates  
-- Identifying the root cause (account lockout)  
-- Resolving the issue and restoring access  
-- Closing the ticket  
+- assigning a high-priority SLA (SEV-A Critical)  
+- adding internal notes for investigation (to simulate communication between agents)  
+- escalating the ticket to a Level II agent (Jane Doe)  
+- responding to the user with updates  
+- identifying the root cause (account lockout)  
+- resolving the issue and restoring access (simulated)  
+- closing the ticket  
 
-This demonstrated a real-world escalation process and how support teams collaborate to resolve complex issues.
+<img src="https://github.com/sjmercene/osTicket-Post-Installation-Configuration-Ticket-Workflow-Escalation-Simulation-/blob/sjmercene-osTicket-Post-configuration-Images/Escalating%20Sarahs%20Ticket.JPG" width="700">
+
+**Screenshot:** `SLA plan applied and escalation initiated`
+
+<img src="https://github.com/sjmercene/osTicket-Post-Installation-Configuration-Ticket-Workflow-Escalation-Simulation-/blob/sjmercene-osTicket-Post-configuration-Images/Closed%20Ticket%20Sarah.JPG" width="700">
+
+**Screenshot:** `Shows full ticket lifecycle including escalation, agent response, and resolution`
+
+this demonstrated how tickets are escalated between support levels and how agents communicate and resolve issues within a structured workflow.
 
 ---
 
