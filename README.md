@@ -1,74 +1,177 @@
-# 🔐 VNC Exploitation & Traffic Analysis
+##  Post-Installation Configuration & Help Desk Simulation
 
-## 📌 Overview
-This project documents a hands-on cybersecurity lab completed on TryHackMe.  
-The objective was to identify exposed services, gain access to a target system, extract sensitive data, and analyse captured network traffic using Wireshark.
+After successfully installing osTicket, I went on to configure the system to simulate a small real-world IT help desk environment. The purpose of this was to gain hands-on experience in how ticketing systems operate within a small organisation scenario.
 
----
-
-## 🎯 Objectives
-- Perform network reconnaissance  
-- Identify exposed services  
-- Gain access to a remote system  
-- Locate and extract sensitive files  
-- Analyse network traffic for useful data  
+I set up key components including roles, departments, and teams, and created agents and users to mirror a real support structure. I then tested the system by creating and managing tickets to understand how issues are logged, assigned, escalated, and resolved.
 
 ---
 
-## 🖥️ Environment
-- **Attacker Machine:** Kali Linux (VirtualBox)  
-- **VPN:** OpenVPN connection to TryHackMe lab network  
-- **Target Machine:** Linux system with exposed VNC service  
+### Roles (Access Control)
+
+I created a role called **Supreme Admin** to control agent permissions within the system.
+
+Roles define what actions agents are allowed to perform. For this lab, I enabled full permissions to allow complete system access during testing.
+
+This helped me understand how access control works in a help desk environment. In real-world scenarios, organisations follow the principle of least privilege, where users are only given the permissions necessary for their role.
 
 ---
 
-## 🔍 Reconnaissance
+### 🏢 Departments (Ticket Routing)
 
-### Nmap Scan
-```bash
-nmap -T4 <target-ip>
-```
-### Results
+To simulate a real business environment, I created a department called **IT Support**.
 
-- 22/tcp → SSH  
-- 80/tcp → Web (WebSockify)  
-- 5901/tcp → VNC  
+Departments are used to route tickets to the appropriate team. In this case, all technical issues submitted by users are directed to IT Support.
 
-### Key Finding
+I also observed default departments such as **Support (Default)** and chose not to remove them. These can act as fallback routing options if configuration is incomplete, which reflects how real systems maintain redundancy.
 
-Port 5901 indicated a VNC service, and port 80 revealed a WebSockify server, suggesting a web-based VNC interface.
+---
 
-## 📸 Screenshots
+### 👥 Teams (Escalation Structure)
 
-### Nmap Scan
-![image alt](https://github.com/sjmercene/sjmercene/blob/69432a4149acb3a7d91e2cd8d1b3023c84cca732/NmapScan.jpg)
-This scan identified three open ports on the target:
-- 22/tcp (SSH)
-- 80/tcp (WebSockify)
-- 5901/tcp (VNC)
+I created a team called **Level II Support** to simulate an escalation structure within the help desk.
 
-The presence of port 5901 indicated a VNC service, suggesting potential remote desktop access.
+Teams allow agents to collaborate and handle more complex issues. This setup represents how higher-level support staff handle advanced technical problems after escalation.
 
+This helped me understand how help desk systems organise support tiers.
 
-### VNC Access
-![image alt](https://github.com/sjmercene/sjmercene/blob/b4407705d5e2610533ae5c84c7f7b458407de8f0/VNC%20Viewer.png)
+---
 
-The screenshot shows a successful connection to the target system via VNC.
+### 👨‍💻 Agents (Help Desk Staff)
 
-A remote desktop session was established after identifying the VNC service on port 5901. The login was successful using weak credentials (`root`), providing full graphical access to the system.
+I created agent accounts to simulate IT support staff.
 
-This confirms that the VNC service was exposed and improperly secured, allowing unauthorized access.
+Example configuration:
 
+- **John Smith**
+- **Jane Doe (Level II Support)**
 
-### ARP Traffic Analysis
-![image alt](https://github.com/sjmercene/sjmercene/blob/b4407705d5e2610533ae5c84c7f7b458407de8f0/ARP%20Traffic%20Overview.jpg)
+Each agent was assigned:
 
-The screenshot displays captured ARP packets in Wireshark.
+- Role → Supreme Admin  
+- Department → IT Support  
+- Team → Level II Support  
 
-The traffic shows standard ARP request and response behaviour:
-- “Who has [IP address]?” → ARP request  
-- “[IP address] is at [MAC address]” → ARP reply  
+Agents are responsible for managing and resolving tickets. This step demonstrated how roles, departments, and teams work together to control access and responsibilities.
 
-This indicates normal network communication where devices resolve IP addresses to MAC addresses.
+I also performed an agent password reset, which reflects a common help desk task related to account management.
 
-No abnormal or suspicious ARP activity (such as duplicate replies or spoofing indicators) was observed during this capture.
+---
+
+### 👤 Users (Customers)
+
+I created user accounts to simulate employees submitting support requests:
+
+- Mike Johnson → `mike@company.com`  
+- Sarah Lee → `sarah@company.com`  
+
+Users represent individuals who generate tickets when issues occur. Unlike agents, users do not have permissions or system access — they only interact with the system by submitting requests.
+
+This helped reinforce the difference between customers and help desk staff.
+
+---
+
+### ⏱️ SLA Plans (Ticket Prioritisation)
+
+I configured SLA (Service Level Agreement) plans to define ticket urgency and response times:
+
+- SEV-A (Critical) → 1 hour  
+- SEV-B (Medium) → 4 hours  
+- SEV-C (Low) → 8 hours  
+
+SLA plans are used to prioritise tickets based on business impact. This reflects real-world environments where critical issues must be resolved faster than less urgent ones.
+
+---
+
+## 🎫 Ticket Workflow Testing
+
+### ✅ Ticket Verification
+
+I created a test ticket as a user and verified that it appeared in the Agent Panel.
+
+This confirmed that the system was correctly receiving and routing tickets from users to help desk staff, validating end-to-end functionality.
+
+---
+
+### 🔄 Basic Ticket Lifecycle (Mike Johnson)
+
+I simulated a complete help desk workflow:
+
+- User submitted a ticket  
+- Ticket was assigned to an agent  
+- SLA (SEV-B) was applied  
+- Agent responded professionally  
+- Issue was resolved  
+- Ticket was closed  
+
+This demonstrated the full lifecycle of a ticket from creation to resolution.
+
+---
+
+### 🚀 Escalation Scenario (Sarah Lee)
+
+To simulate a more realistic scenario, I created a ticket where a user could not log into their workstation.
+
+The workflow included:
+
+- Assigning a high-priority SLA (SEV-A)  
+- Adding internal notes for investigation  
+- Escalating the ticket to a Level II agent  
+- Responding to the user with updates  
+- Identifying the root cause (account lockout)  
+- Resolving the issue and restoring access  
+- Closing the ticket  
+
+This demonstrated a real-world escalation process and how support teams collaborate to resolve complex issues.
+
+---
+
+## 🛠️ Additional Troubleshooting (Post-Install)
+
+### Email Notification Error
+
+**Problem:**  
+PHP warning when creating or replying to tickets:
+mail() failed to connect to mailserver (localhost:25)
+
+**Cause:**  
+osTicket attempted to send email notifications using the PHP mail() function, but no SMTP/mail server was configured in the lab environment.
+
+**Solution:**  
+Disabled email alerts and notifications in:
+
+Admin Panel → Settings → Tickets
+
+**Result:**  
+Ticket creation and replies continued to work normally despite the warning, confirming that the issue was related to missing email infrastructure rather than core system functionality.
+
+---
+
+### Ticket Lock Warning
+
+**Problem:**  
+"Unable to lock the ticket. Someone else could be working on the same ticket."
+
+**Cause:**  
+This occurs when osTicket detects multiple sessions or possible concurrent access to the same ticket.
+
+**Fix:**  
+Refreshing the page or reopening the ticket resolved the issue.
+
+**Insight:**  
+This demonstrated how help desk systems implement concurrency control to prevent multiple agents from editing the same ticket at the same time.
+
+---
+
+## 🎯 Key Takeaways
+
+This phase helped me understand:
+
+- How help desk systems structure access using roles and permissions  
+- How tickets are routed using departments  
+- How escalation works using teams  
+- The difference between users and agents  
+- How SLA plans define urgency and response expectations  
+- How tickets move through a full lifecycle (open → assigned → resolved → closed)  
+- How to troubleshoot real-world issues such as missing dependencies and system warnings  
+
+---
