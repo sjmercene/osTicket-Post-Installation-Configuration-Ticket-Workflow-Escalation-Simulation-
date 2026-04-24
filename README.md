@@ -157,48 +157,51 @@ this demonstrated how tickets are escalated between support levels and how agent
 ### Email Notification Error
 
 **Problem:**  
-PHP warning when creating or replying to tickets:
+While creating or replying to tickets, a PHP warning appeared:
 mail() failed to connect to mailserver (localhost:25)
 
 **Cause:**  
-osTicket attempted to send email notifications using the PHP mail() function, but no SMTP/mail server was configured in the lab environment.
+I investigated the warning and found that osTicket was attempting to send email notifications using the PHP mail() function. since no SMTP or mail server was configured in the lab environment, the request to localhost:25 failed.
 
 **Solution:**  
-Disabled email alerts and notifications in:
+I disabled email alerts and notifications via:
 
-Admin Panel → Settings → Tickets
+`Admin Panel → Settings → Tickets`
 
 **Result:**  
-Ticket creation and replies continued to work normally despite the warning, confirming that the issue was related to missing email infrastructure rather than core system functionality.
+In my observations Tickets continued to function normally, confirming the issue was related to missing email configuration rather than the core application.
 
 ---
 
 ### Ticket Lock Warning
 
 **Problem:**  
-"Unable to lock the ticket. Someone else could be working on the same ticket."
+Message appeared when trying to edit a ticket: 
+
+`"Unable to lock the ticket. Someone else could be working on the same ticket."`
 
 **Cause:**  
-This occurs when osTicket detects multiple sessions or possible concurrent access to the same ticket.
+I encountered this issue while accessing the same ticket multiple times and noticed that osTicket restricted further actions. based on this behaviour, it appeared the system was preventing multiple active sessions or concurrent edits on the same ticket.
 
 **Fix:**  
-Refreshing the page or reopening the ticket resolved the issue.
+Refreshing the page or reopening the ticket cleared the session and allowed normal interaction.
+
 
 **Insight:**  
-This demonstrated how help desk systems implement concurrency control to prevent multiple agents from editing the same ticket at the same time.
+This showed how help desk systems implement basic control to prevent multiple agents from editing the same ticket at the same time.
 
 ---
 
-## 🎯 Key Takeaways
+## Key Takeaways
 
-This phase helped me understand:
+With this home lab, i gained a clearer understanding of how a help desk system operates in practice.
 
-- How help desk systems structure access using roles and permissions  
-- How tickets are routed using departments  
-- How escalation works using teams  
-- The difference between users and agents  
-- How SLA plans define urgency and response expectations  
-- How tickets move through a full lifecycle (open → assigned → resolved → closed)  
-- How to troubleshoot real-world issues such as missing dependencies and system warnings  
+- how roles and permissions control agent access within the system  
+- how departments are used to route tickets to the appropriate team  
+- how escalation works through team structures and higher-level support  
+- the difference between users (customers) and agents (support staff)  
+- how SLA plans affect ticket priority and response expectations  
+- how tickets move through a full lifecycle from creation to resolution  
+- how to identify and troubleshoot common issues such as configuration errors and system warnings  
 
 ---
